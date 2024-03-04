@@ -5,7 +5,7 @@ describe("Página de usuário", () => {
     cy.visit("http://localhost:3000/");
   });
 
-  it("Cadastrando um novo usuário com dados corretos", () => {
+  it("Cadastrando um novo usuário existente ", () => {
     const email = `${uuidv4()}@gmail.com`;
     const password = uuidv4();
     cy.intercept({
@@ -15,8 +15,10 @@ describe("Página de usuário", () => {
     }).as("routerPost")
     cy.registrarBytebank(email, password);
     cy.wait("@routerPost").its("response.statusCode").should("eq", 201)
-    cy.get('[data-test="mensagem-sucesso"]')
-    .contains("Usuário cadastrado com sucesso!")
-    .should("be.visible");
+    cy.registrarBytebank(email, password);
+    cy.get('[data-test="mensagem-erro"]')
+    .contains("E-mail já cadastrado!")
+    .should("be.visible")
+    cy.wait("@routerPost").its("response.statusCode").should("eq", 401)
   });
 });

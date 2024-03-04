@@ -9,7 +9,4 @@ Cypress.Commands.add("registrarBytebank", (email, password) => {
   cy.get(el.check).click();
   cy.get(el.submeter).click();
 
-  cy.get(el.mensagemSucesso)
-    .contains("Usuário cadastrado com sucesso!")
-    .should("be.visible");
 });
