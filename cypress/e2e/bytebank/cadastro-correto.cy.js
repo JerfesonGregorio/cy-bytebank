@@ -10,7 +10,7 @@ describe("Página de usuário", () => {
     const password = uuidv4();
     cy.intercept({
       method: "POST",
-      url: "public/cadastrar",
+      url: "/",
       hostname: "localhost"
     }).as("routerPost")
     cy.registrarBytebank(email, password);

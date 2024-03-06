@@ -10,7 +10,7 @@ it("acessando conta cadastrada", () => {
 
   cy.intercept({
     method: "POST",
-    url: "public/cadastrar",
+    url: "users/register",
     hostname: "localhost",
   }).as("registerRouter");
   cy.registrarBytebank(email, password);
@@ -20,11 +20,11 @@ it("acessando conta cadastrada", () => {
 
   cy.intercept({
     method: "POST",
-    url: "public/login",
+    url: "users/login",
     hostname: "localhost",
   }).as("loginRouter");
   cy.loginBytebank(email, password);
-  cy.wait("@loginRouter").its("response.statusCode").should("eq", 201);
+  cy.wait("@loginRouter").its("response.statusCode").should("eq", 200);
 
   cy.url().should("include", "/home");
   cy.get(`[data-test="app-home"]`).should("be.visible")
