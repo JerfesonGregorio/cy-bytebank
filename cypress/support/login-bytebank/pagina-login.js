@@ -1,6 +1,9 @@
 const el = require("./elements").ELEMENTS;
 
 Cypress.Commands.add("loginBytebank", (email, password) => {
+  
+  cy.visit("http://localhost:3000/")
+  
   cy.get(el.btnLogin).click();
 
   cy.get(el.email).type(email);

@@ -27,5 +27,13 @@ Cypress.Commands.add("requestUserRegisted", (id) => {
     })
 })
 
-
-
+Cypress.Commands.add("requestUserNotFound", () => {
+    cy.request({
+        method: 'GET',
+        url: 'http://localhost:8000/users/¨',
+        failOnStatusCode: false
+    }).then((response) => {
+        expect(response.status).to.eq(404)
+        expect(response.body).to.eq('Not Found')
+    })
+})
