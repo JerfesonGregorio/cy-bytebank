@@ -17,25 +17,26 @@ describe("Retornando usuários contidos na api", () => {
 
     it('Interceptando o POST user/login', () => {
 
-
         cy.intercept({
             method: "POST",
             url: "users/login",
             hostname: "localhost"
         }).as("loginRequest")
 
+        cy.visit('http://localhost:3000')
+
         cy.loginBytebank("neilton@alura.com", "123456")
 
-        // cy.wait("@loginRequest").its("response.statusCode").should("eq", 200)
-        cy.wait("@loginRequest").then((interception) => {
-            interception.response = {
-                statusCode: 200,
-                body: {
-                    sucess: true,
-                    message: 'Login bem sucedido!'
-                }
-            }
-        })
+        cy.wait("@loginRequest").its("response.statusCode").should("eq", 200)
+        // cy.wait("@loginRequest").then((interception) => {
+        //     interception.response = {
+        //         statusCode: 200,
+        //         body: {
+        //             sucess: true,
+        //             message: 'Login bem sucedido!'
+        //         }
+        //     }
+        // })
         
         cy.get('[data-test="titulo-boas-vindas"]').should("contain.text", "Bem vindo de volta!")
 
